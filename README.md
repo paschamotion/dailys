@@ -3,12 +3,20 @@
 Tagesplanung, Dokumentation (inkl. Fotobeleg) und ein ruhiges Levelsystem in einer installierbaren Web-App.
 Alle Daten bleiben **privat auf dem Gerät** (IndexedDB) – es gibt keinen Server, keine Konten und keine sozialen Funktionen.
 
-## Start
+## Ohne eigenen Rechner: GitHub Pages (empfohlen)
 
-Voraussetzung: Node.js ≥ 20.
+Jeder Push auf `main` testet, baut und veröffentlicht die App automatisch (`.github/workflows/deploy.yml`).
+Einmalig nötig: im Repository **Settings → Pages → Build and deployment → Source: „GitHub Actions“** wählen.
+Danach unter **Actions** den Workflow „Testen & veröffentlichen“ mit *Run workflow* einmal starten (oder auf `main` pushen).
+Die App ist dann erreichbar unter **https://paschamotion.github.io/dailys/** →
+in Safari öffnen → *Teilen → Zum Home-Bildschirm*.
+
+## Lokal starten
+
+Voraussetzung: Node.js ≥ 18.18 (für `npm test` ≥ 22.12; empfohlen: Node 22, siehe `.nvmrc`).
 
 ```bash
-npm install
+npm ci              # exakt die Versionen aus package-lock.json
 npm run dev          # Entwicklungsserver, auch im WLAN erreichbar (--host)
 npm test             # Unit-/Integrationstests (Foto-Pflicht, XP, Wiederholungen, Streaks)
 npm run build        # Typprüfung + Produktions-Build nach dist/
