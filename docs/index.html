@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121210" media="(prefers-color-scheme: dark)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Tagwerk" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <title>Tagwerk</title>
+    <script type="module" crossorigin src="./assets/index-DT_cY6Kk.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CwxTzs8i.css">
+  </head>
+  <body>
+    <div id="root">
+      <!-- Startbildschirm: wird von der App ersetzt. Bleibt er stehen, erklärt er warum. -->
+      <div id="boot" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-family:-apple-system,system-ui,sans-serif;color:#47443e;background:#f4f2ec;text-align:center">
+        <div style="max-width:420px">
+          <div style="font:600 28px ui-serif,Georgia,serif;color:#1c1b18;margin-bottom:8px">Tagwerk</div>
+          <div id="boot-msg">Wird geladen …</div>
+        </div>
+      </div>
+    </div>
+    <noscript>Tagwerk benötigt JavaScript.</noscript>
+    <script>
+      (function () {
+        var errors = [];
+        window.addEventListener('error', function (e) {
+          errors.push((e.message || 'Datei konnte nicht geladen werden') + (e.filename ? ' (' + e.filename.split('/').pop() + ')' : (e.target && e.target.src ? ' (' + e.target.src.split('/').pop() + ')' : '')));
+        }, true);
+        setTimeout(function () {
+          if (window.__tagwerkStarted) return;
+          var el = document.getElementById('boot-msg');
+          if (!el) return;
+          var source = /\/src\/main\.tsx/.test(document.documentElement.innerHTML) && !document.querySelector('script[src*="assets/"]');
+          el.innerHTML = source
+            ? '<b>Die App wurde noch nicht gebaut veröffentlicht.</b><br><br>Diese Seite zeigt den Quellcode statt der fertigen App. ' +
+              'Auf GitHub unter <b>Settings → Pages</b>: Source „Deploy from a branch“, Branch <b>main</b>, Ordner <b>/docs</b> wählen.'
+            : '<b>Die App konnte nicht starten.</b><br><br>Bitte Seite neu laden. Falls das nicht hilft, ist dein iOS evtl. zu alt (nötig: iOS 14 oder neuer).' +
+              (errors.length ? '<br><br><small style="color:#b3412f">' + errors.slice(0, 3).join('<br>').replace(/</g, '&lt;') + '</small>' : '');
+        }, 6000);
+      })();
+    </script>
+  </body>
+</html>

@@ -3,13 +3,14 @@
 Tagesplanung, Dokumentation (inkl. Fotobeleg) und ein ruhiges Levelsystem in einer installierbaren Web-App.
 Alle Daten bleiben **privat auf dem Gerät** (IndexedDB) – es gibt keinen Server, keine Konten und keine sozialen Funktionen.
 
-## Ohne eigenen Rechner: GitHub Pages (empfohlen)
+## Ohne eigenen Rechner: GitHub Pages
 
-Jeder Push auf `main` testet, baut und veröffentlicht die App automatisch (`.github/workflows/deploy.yml`).
-Einmalig nötig: im Repository **Settings → Pages → Build and deployment → Source: „GitHub Actions“** wählen.
-Danach unter **Actions** den Workflow „Testen & veröffentlichen“ mit *Run workflow* einmal starten (oder auf `main` pushen).
-Die App ist dann erreichbar unter **https://paschamotion.github.io/dailys/** →
-in Safari öffnen → *Teilen → Zum Home-Bildschirm*.
+Die fertig gebaute App liegt im Ordner `docs/` auf `main`. GitHub Pages ist so eingestellt:
+**Settings → Pages → Source: „Deploy from a branch“, Branch `main`, Ordner `/docs`.**
+Adresse: **https://paschamotion.github.io/dailys/** → in Safari öffnen → *Teilen → Zum Home-Bildschirm*.
+
+Nach Code-Änderungen `npm run build:docs` ausführen und `docs/` mit committen.
+Der Workflow `.github/workflows/deploy.yml` testet jeden Push auf `main` und aktualisiert `docs/` automatisch, falls es vergessen wurde.
 
 ## Lokal starten
 

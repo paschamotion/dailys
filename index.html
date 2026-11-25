@@ -39,8 +39,7 @@
           var source = /\/src\/main\.tsx/.test(document.documentElement.innerHTML) && !document.querySelector('script[src*="assets/"]');
           el.innerHTML = source
             ? '<b>Die App wurde noch nicht gebaut veröffentlicht.</b><br><br>Diese Seite zeigt den Quellcode statt der fertigen App. ' +
-              'Auf GitHub: <b>Settings → Pages → Build and deployment → Source: „GitHub Actions“</b> wählen, ' +
-              'dann unter <b>Actions</b> den Workflow „Testen &amp; veröffentlichen“ erneut starten.'
+              'Auf GitHub unter <b>Settings → Pages</b>: Source „Deploy from a branch“, Branch <b>main</b>, Ordner <b>/docs</b> wählen.'
             : '<b>Die App konnte nicht starten.</b><br><br>Bitte Seite neu laden. Falls das nicht hilft, ist dein iOS evtl. zu alt (nötig: iOS 14 oder neuer).' +
               (errors.length ? '<br><br><small style="color:#b3412f">' + errors.slice(0, 3).join('<br>').replace(/</g, '&lt;') + '</small>' : '');
         }, 6000);

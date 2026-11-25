@@ -1,14 +1,14 @@
 name: Testen & veröffentlichen
 
+# GitHub Pages ist auf „Deploy from a branch: main / docs“ eingestellt.
+# Dieser Workflow testet jeden Push und hält den gebauten Ordner docs/ aktuell.
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -25,17 +25,15 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - run: npm run build:docs
+      - name: docs/ aktualisieren, falls sich der Build geändert hat
+        run: |
+          if [ -n "$(git status --porcelain docs)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs
+            git commit -m "Build docs/ für GitHub Pages aktualisieren"
+            git push
+          else
+            echo "docs/ ist aktuell."
+          fi
