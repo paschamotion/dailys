@@ -16,8 +16,36 @@
     <title>Tagwerk</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Startbildschirm: wird von der App ersetzt. Bleibt er stehen, erklärt er warum. -->
+      <div id="boot" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-family:-apple-system,system-ui,sans-serif;color:#47443e;background:#f4f2ec;text-align:center">
+        <div style="max-width:420px">
+          <div style="font:600 28px ui-serif,Georgia,serif;color:#1c1b18;margin-bottom:8px">Tagwerk</div>
+          <div id="boot-msg">Wird geladen …</div>
+        </div>
+      </div>
+    </div>
     <noscript>Tagwerk benötigt JavaScript.</noscript>
+    <script>
+      (function () {
+        var errors = [];
+        window.addEventListener('error', function (e) {
+          errors.push((e.message || 'Datei konnte nicht geladen werden') + (e.filename ? ' (' + e.filename.split('/').pop() + ')' : (e.target && e.target.src ? ' (' + e.target.src.split('/').pop() + ')' : '')));
+        }, true);
+        setTimeout(function () {
+          if (window.__tagwerkStarted) return;
+          var el = document.getElementById('boot-msg');
+          if (!el) return;
+          var source = /\/src\/main\.tsx/.test(document.documentElement.innerHTML) && !document.querySelector('script[src*="assets/"]');
+          el.innerHTML = source
+            ? '<b>Die App wurde noch nicht gebaut veröffentlicht.</b><br><br>Diese Seite zeigt den Quellcode statt der fertigen App. ' +
+              'Auf GitHub: <b>Settings → Pages → Build and deployment → Source: „GitHub Actions“</b> wählen, ' +
+              'dann unter <b>Actions</b> den Workflow „Testen &amp; veröffentlichen“ erneut starten.'
+            : '<b>Die App konnte nicht starten.</b><br><br>Bitte Seite neu laden. Falls das nicht hilft, ist dein iOS evtl. zu alt (nötig: iOS 14 oder neuer).' +
+              (errors.length ? '<br><br><small style="color:#b3412f">' + errors.slice(0, 3).join('<br>').replace(/</g, '&lt;') + '</small>' : '');
+        }, 6000);
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
